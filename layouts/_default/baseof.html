@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="yandex" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else if eq .Kind "404" }}Страница не найдена / {{ .Site.Title }}{{ else }}{{ .Title }} / {{ .Site.Title }}{{ end }}</title>
+  {{ block "head" . }}{{ end }}
+  <script src="/assets/nav.js" defer></script>
+</head>
+<body{{ with .Params.bodyClass }} class="{{ . }}"{{ end }}>
+  {{ block "main" . }}{{ end }}
+  {{ block "scripts" . }}{{ end }}
+</body>
+</html>

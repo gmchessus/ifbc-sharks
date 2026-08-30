@@ -1,0 +1,8 @@
+# Hugo build artifacts / cache (regenerable — not part of the site)
+.hugo_build.lock
+resources/
+
+# Editor / OS cruft
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,36 @@
+{{ define "head" }}
+<link rel="stylesheet" href="/assets/styles.css">
+{{ end }}
+
+{{ define "main" }}
+{{ $slug := .Params.slug }}
+{{ $photos := index .Site.Data.photos $slug }}
+{{ partial "topstrip.html" . }}
+{{ partial "header.html" . }}
+
+<main class="page-shell">
+  <section class="page-hero">
+    <div class="page-pad">
+      <p class="section-index">05<span>/</span> ФОТО</p>
+      <h1>{{ .Title }}</h1>
+      <p class="page-deck">{{ .Params.photos_count }} фотографий · <a href="/photo/" style="color:var(--shark);border-bottom:1px solid var(--shark);text-decoration:none">← все альбомы</a></p>
+    </div>
+  </section>
+
+  <section class="photo-grid-section">
+    <div class="photo-masonry">
+      {{ range $photos }}
+      <div class="photo-item">
+        <img src="/photo/{{ $slug }}/{{ . }}" alt="" loading="lazy">
+      </div>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="contact-new"><div class="page-pad contact-wrap"><div><div class="section-index light-index">∞ <span>/</span> НА СВЯЗИ</div><h2>Будь<br><em>в команде.</em></h2></div><div class="contact-links"><a href="https://vk.com/fbc_sharks" target="_blank" rel="noreferrer"><span>VK</span><b>ВКонтакте</b><i>↗</i></a><a href="https://t.me/ifbc_sharks" target="_blank" rel="noreferrer"><span>TG</span><b>Telegram</b><i>↗</i></a><p>ИФБК «Акулы»<br>Санкт-Петербург · Россия</p></div></div></section>
+</main>
+
+{{ partial "footer.html" . }}
+{{ end }}
+
+{{ define "scripts" }}{{ end }}

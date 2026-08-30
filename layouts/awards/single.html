@@ -1,0 +1,73 @@
+{{ define "head" }}
+<link rel="stylesheet" href="/assets/styles.css">
+{{ end }}
+
+{{ define "main" }}
+{{ partial "topstrip.html" . }}
+{{ partial "header.html" . }}
+
+<main class="page-shell">
+  {{ $gold := 0 }}{{ $silver := 0 }}{{ $bronze := 0 }}{{ $years := 0 }}
+  {{ range $year, $awards := .Params.awards }}
+    {{ if $awards }}{{ $years = add $years 1 }}{{ end }}
+    {{ range $awards }}
+      {{ if eq .medal "gold" }}{{ $gold = add $gold 1 }}
+      {{ else if eq .medal "silver" }}{{ $silver = add $silver 1 }}
+      {{ else }}{{ $bronze = add $bronze 1 }}{{ end }}
+    {{ end }}
+  {{ end }}
+
+  <section class="awards-hero">
+    <div class="page-pad awards-hero-inner">
+      <div class="awards-hero-side">
+        <div class="section-index light-index">{{ .Params.section }} <span>/</span> {{ .Params.sectionName }}</div>
+        <h1 class="awards-hero-title">{{ .Title }}</h1>
+        <p class="awards-hero-deck">{{ .Params.subtitle }} Трофеи и достижения клуба за всю историю: чемпионства, кубки, медали и титулы.</p>
+      </div>
+      <div class="awards-hero-right">
+        <div class="awards-hero-total"><strong>{{ add $gold $silver $bronze }}</strong><span>наград за {{ $years }} сезонов</span></div>
+        <div class="awards-hero-medals">
+          <div class="awards-hero-medal"><img src="/images/medal-gold.png" alt="Золотые медали" width="52" height="52"><strong>{{ $gold }}</strong><span class="awards-hero-medal-name">Золотые медали</span></div>
+          <div class="awards-hero-medal"><img src="/images/medal-silver.png" alt="Серебряные медали" width="52" height="52"><strong>{{ $silver }}</strong><span class="awards-hero-medal-name">Серебряные медали</span></div>
+          <div class="awards-hero-medal"><img src="/images/medal-bronze.png" alt="Бронзовые медали" width="52" height="52"><strong>{{ $bronze }}</strong><span class="awards-hero-medal-name">Бронзовые медали</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="awards-new page-pad">
+    <div class="awards-data">
+      <p class="awards-data-label">Трофеи клуба по сезонам</p>
+      <div class="awards-stats">
+        <div class="awards-stat"><strong>13</strong><span>титулов СПб</span></div>
+        <div class="awards-stat"><strong>4</strong><span>победы в R-лиге</span></div>
+        <div class="awards-stat"><strong>2</strong><span>Кубка России</span></div>
+        <div class="awards-stat"><strong>2</strong><span>Чемпионата России</span></div>
+        <div class="awards-stat"><strong>19</strong><span>международных турниров</span></div>
+      </div>
+
+      {{ range $year, $awards := .Params.awards }}
+      {{ if $awards }}
+      <div class="awards-year-block">
+        {{ $n := len $awards }}{{ $word := "наград" }}{{ if eq $n 1 }}{{ $word = "награда" }}{{ else if and (ge $n 2) (le $n 4) }}{{ $word = "награды" }}{{ end }}
+        <h2 class="awards-year-head"><strong>{{ $year }}</strong><span>{{ $n }} {{ $word }}</span></h2>
+        <div class="awards-grid">
+          {{ range $awards }}
+          <div class="award-card">
+            <div class="award-medal"><img src="/images/medal-{{ .medal }}.png" alt="{{ if eq .medal "gold" }}Первое место{{ else if eq .medal "silver" }}Второе место{{ else }}Третье место{{ end }}" loading="lazy" width="58" height="58"></div>
+            <div class="award-title">{{ .title }}</div>
+            <div class="award-date">{{ .date }}</div>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="contact-new"><div class="page-pad contact-wrap"><div><div class="section-index light-index">∞ <span>/</span> НА СВЯЗИ</div><h2>Будь<br><em>в команде.</em></h2></div><div class="contact-links"><a href="https://vk.com/fbc_sharks" target="_blank" rel="noreferrer"><span>VK</span><b>ВКонтакте</b><i>↗</i></a><a href="https://t.me/ifbc_sharks" target="_blank" rel="noreferrer"><span>TG</span><b>Telegram</b><i>↗</i></a><p>ИФБК «Акулы»<br>Санкт-Петербург · Россия</p></div></div></section>
+</main>
+
+{{ partial "footer.html" . }}
+{{ end }}

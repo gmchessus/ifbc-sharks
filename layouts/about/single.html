@@ -1,0 +1,55 @@
+{{ define "head" }}
+<link rel="stylesheet" href="/assets/styles.css">
+{{ end }}
+
+{{ define "main" }}
+{{ partial "topstrip.html" . }}
+{{ partial "header.html" . }}
+
+<main class="about-classic">
+  <section class="page-hero">
+    <div class="page-pad">
+      <p class="section-index">{{ with .Params.section }}{{ . }}{{ end }}<span>/</span> {{ .Params.sectionName }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.subtitle }}<p class="page-deck">{{ . }}</p>{{ end }}
+    </div>
+  </section>
+
+  <div class="about-classic-shell">
+    <div class="about-classic-grid">
+      <div class="about-classic-main">
+        <figure class="about-classic-photo">
+          <img src="/images/about-hero.jpg" alt="Команда ИФБК «Акулы»">
+        </figure>
+        <div class="about-classic-text">
+          {{ .Content }}
+        </div>
+      </div>
+      <aside class="about-classic-dates">
+        <div class="about-classic-date"><div class="about-classic-year">2009</div><div class="about-classic-event">Основание клуба</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2012</div><div class="about-classic-event">Первые выездные игры</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2013</div><div class="about-classic-event">Череда побед на российских и международных турнирах</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2015</div><div class="about-classic-event">Регистрация клуба в министерстве юстиции РФ</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2016</div><div class="about-classic-event">Забираем вместе: Кубок Ленинградской области, Кубок Петрозаводска, Кубок Санкт-Петербурга</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2017</div><div class="about-classic-event">Победа в Чемпионате Санкт-Петербурга</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2018</div><div class="about-classic-event">«Акулы» — победители чемпионата Санкт-Петербурга по флорболу, серебряные призёры Кубка России</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2019</div><div class="about-classic-event">АКУЛЫ активно участвуют в международных турнирах и становятся победителями и призерами соревнований в Финляндии, Дании и Нидерландах, а также побеждают в соревнованиях по флорболу питерской R-League.</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2020</div><div class="about-classic-event">Клуб получает статус Императорского и покровительство Российского императорского дома. В этом же году АКУЛЫ становятся обладателями Кубка России по флорболу.</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2021</div><div class="about-classic-event">АКУЛЫ становятся победителями Чемпионата России по флорболу Первой лиги и завоевывают путевку в Высшую лигу.</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2022</div><div class="about-classic-event">Победа в Первой лиге Чемпионата России — сезон 2022/23, выиграны все 16 матчей</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2023</div><div class="about-classic-event">Чемпионы R-лиги 2022/23 и обладатели Кубка Unihoc Russia Cup. Серебро St. Petersburg Open</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2024</div><div class="about-classic-event">Выступления в R-лиге Санкт-Петербурга и турнире Unihoc Russia Cup</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2025</div><div class="about-classic-event">Сезон 2024/25 во втором дивизионе R-лиги; в декабре состав усилили Илья Липатов, Денис Басов и Кирилл Макаров</div></div>
+        <div class="about-classic-date"><div class="about-classic-year">2026</div><div class="about-classic-event">Серебро R-лиги 2025/26: финал с «Невой» 25 апреля. Клубу — 17 лет, старт женской команды</div></div>
+        <figure class="about-classic-license">
+          <img src="/images/about-license.jpg" alt="Грамота о присвоении клубу Императорского статуса">
+        </figure>
+      </aside>
+    </div>
+  </div>
+</main>
+
+{{ partial "footer.html" . }}
+{{ end }}
+
+{{ define "scripts" }}{{ end }}

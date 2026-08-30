@@ -1,0 +1,52 @@
+{{ define "head" }}
+<link rel="stylesheet" href="/assets/styles.css">
+{{ end }}
+
+{{ define "main" }}
+{{ partial "topstrip.html" . }}
+{{ partial "header.html" . }}
+
+<main class="page-shell">
+  <section class="page-hero">
+    <div class="page-pad">
+      <p class="section-index">{{ .Params.section }}<span>/</span> {{ .Params.sectionName }}</p>
+      <h1>{{ .Title }}</h1>
+      <p class="page-deck">{{ .Params.subtitle }}</p>
+    </div>
+  </section>
+
+  <section class="shop-new">
+    <div class="shop-grid">
+      {{ range .Params.products }}
+      <article class="shop-card">
+        {{ $photos := .photos }}
+        {{ $main := index $photos 0 }}
+        <div class="shop-photo">
+          <img src="{{ $main }}" alt="{{ .title }}" loading="lazy">
+        </div>
+        {{ if gt (len $photos) 1 }}
+        {{ $title := .title }}
+        <div class="shop-thumbs">
+          {{ range after 1 $photos }}
+          <img src="{{ . }}" alt="{{ $title }}" loading="lazy">
+          {{ end }}
+        </div>
+        {{ end }}
+        <div class="shop-info">
+          <h2 class="shop-title">{{ .title }}</h2>
+          <div class="shop-price">{{ .price }}</div>
+          {{ with .note }}<div class="shop-note">{{ . }}</div>{{ end }}
+        </div>
+      </article>
+      {{ end }}
+    </div>
+    <p class="shop-more">По вопросам заказа — <a href="https://vk.com/fbc_sharks" target="_blank" rel="noreferrer">группа ВКонтакте</a> или <a href="https://t.me/ifbc_sharks" target="_blank" rel="noreferrer">Telegram</a>.</p>
+  </section>
+
+  <section class="contact-new"><div class="page-pad contact-wrap"><div><div class="section-index light-index">∞ <span>/</span> НА СВЯЗИ</div><h2>Будь<br><em>в команде.</em></h2></div><div class="contact-links"><a href="https://vk.com/fbc_sharks" target="_blank" rel="noreferrer"><span>VK</span><b>ВКонтакте</b><i>↗</i></a><a href="https://t.me/ifbc_sharks" target="_blank" rel="noreferrer"><span>TG</span><b>Telegram</b><i>↗</i></a><p>ИФБК «Акулы»<br>Санкт-Петербург · Россия</p></div></div></section>
+</main>
+
+{{ partial "footer.html" . }}
+{{ end }}
+
+{{ define "scripts" }}{{ end }}

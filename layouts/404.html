@@ -1,0 +1,34 @@
+{{ define "head" }}
+<link rel="stylesheet" href="/assets/styles.css">
+<style>
+  .e404{min-height:calc(100vh - 106px);background:var(--black);color:var(--white);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:90px 7vw 110px;position:relative;overflow:hidden}
+  .e404::after{content:'404';position:absolute;right:-4vw;bottom:-20vw;color:#ffffff08;font:900 58vw/.7 var(--display);letter-spacing:-.04em;pointer-events:none;white-space:nowrap}
+  .e404 .section-index{position:relative;z-index:1}
+  .e404 h1{position:relative;z-index:1;font:800 clamp(74px,12vw,180px)/.8 var(--display);letter-spacing:-.045em;text-transform:uppercase;margin:26px 0 20px}
+  .e404 h1 em{font-style:normal;color:var(--shark)}
+  .e404-deck{position:relative;z-index:1;max-width:480px;color:#a6adba;font-size:17px;line-height:1.65;margin:0 0 38px}
+  .e404-cta{position:relative;z-index:1;display:flex;align-items:center;gap:25px;flex-wrap:wrap}
+  @media(max-width:850px){.e404{min-height:calc(100vh - 68px);padding:70px 20px 90px}.e404-cta{align-items:flex-start;flex-direction:column;gap:22px}}
+</style>
+{{ end }}
+
+{{ define "main" }}
+{{ partial "topstrip.html" . }}
+{{ partial "header.html" . }}
+
+<main>
+  <section class="e404">
+    <p class="section-index">404 <span>/</span> Страница не найдена</p>
+    <h1>Мимо<br><em>ворот.</em></h1>
+    <p class="e404-deck">Такой страницы нет — или она уже ушла в историю. Как мяч в аут: ничего страшного, начнём с начала.</p>
+    <div class="e404-cta">
+      <a class="button button-lime" href="/">На главную <span>→</span></a>
+      <a class="under-link" href="/photo/">Открыть архив <span>↗</span></a>
+    </div>
+  </section>
+</main>
+
+{{ partial "footer.html" . }}
+{{ end }}
+
+{{ define "scripts" }}{{ end }}

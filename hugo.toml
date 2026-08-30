@@ -1,0 +1,32 @@
+baseURL = 'https://gmchessus.duckdns.org/'
+languageCode = 'ru'
+defaultContentLanguage = 'ru'
+enableRobotsTXT = true
+title = 'АКУЛЫ / ИФБК — команда в движении'
+
+[params]
+  description = 'ИФБК «Акулы» — флорбольный клуб Санкт-Петербурга. Команда, характер, история и архив.'
+
+disableKinds = ['taxonomy', 'term', 'RSS']
+
+[outputs]
+  home = ['HTML']
+  section = ['HTML']
+  page = ['HTML']
+
+[sitemap]
+  changefreq = 'weekly'
+  priority = 0.5
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[module]
+  [[module.mounts]]
+    source = 'static'
+    target = 'static'
+  [[module.mounts]]
+    source = 'archive'
+    target = 'static/archive'

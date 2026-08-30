@@ -1,0 +1,59 @@
+{{ define "head" }}
+<link rel="stylesheet" href="/assets/styles.css">
+{{ end }}
+
+{{ define "main" }}
+<div class="test-strip"><span>Тестовая версия</span><span>Императорский клуб</span><span>ИФБК «Акулы» · Санкт-Петербург</span><span>С 2009 года</span></div>
+
+{{ partial "header.html" . }}
+
+<main id="top">
+  <section class="hero-new">
+    <div class="hero-copy-new">
+      <p class="kicker"><span class="signal"></span> Императорский флорбольный клуб · Санкт-Петербург</p>
+      <h1>Не просто<br><i>команда.</i></h1>
+      <p class="hero-deck">Мы — характер, который видно на площадке. История, в которой каждый сезон оставляет след.</p>
+      <div class="hero-cta"><a class="button button-lime" href="#season">Смотреть сезон <span>↓</span></a></div>
+    </div>
+    <div class="hero-shot">
+      <img src="/archive/media/legacy/upload/iblock/422/GJJm_hvLYXs.jpg" alt="Игроки ИФБК «Акулы» на площадке" fetchpriority="high">
+      <div class="shot-shade"></div>
+      <div class="shot-label"><span>АРХИВ / 01</span><b>ИГРА НАЧИНАЕТСЯ<br>ЗДЕСЬ</b></div>
+      <div class="shot-stamp">АКУЛЫ<br><small>FLOORBALL CLUB</small></div>
+    </div>
+    <div class="hero-edge"><span>01</span><span>SCROLL TO EXPLORE</span><span>↓</span></div>
+  </section>
+
+  <section class="marquee" aria-label="Девиз клуба"><div><span>ВМЕСТЕ МЫ СИЛЬНЕЕ</span><b>✳</b><span>ИГРАЕМ С ХАРАКТЕРОМ</span><b>✳</b><span>АКУЛЫ / 2009—2026</span><b>✳</b><span>ВМЕСТЕ МЫ СИЛЬНЕЕ</span></div></section>
+
+  <section class="intro-new page-pad" id="club">
+    <div class="section-index">01 <span>/</span> КЛУБ</div>
+    <div class="intro-content"><h2>Вода меняет<br><em>форму.</em><br>Характер — нет.</h2><div><p>ИФБК «Акулы» — это люди, для которых флорбол давно стал больше, чем спорт. Здесь остаются те, кто умеет работать друг за друга и выходить на площадку с голодом до игры.</p><a class="under-link dark-link" href="#season">Узнать, что дальше <span>↗</span></a></div></div>
+  </section>
+
+  <section class="season-new" id="season">
+    <div class="page-pad season-wrap">
+      <div class="section-index light-index">02 <span>/</span> СЕЗОН 2026/27</div>
+      <div class="season-title"><p class="kicker light-kicker">Новый сезон · новые задачи</p><h2>Большая игра<br><em>впереди.</em></h2><p class="season-note">Команда не ждёт идеального момента.<br>Она создаёт его сама.</p></div>
+      <div class="season-grid">
+        <article class="season-lead"><span class="card-no">01</span><div><p class="card-label">Направление клуба</p><h3>Женская<br>команда <em>RW</em></h3><p>Новый состав, новый ритм и ещё одна причина держаться вместе. Скоро на площадке.</p></div><span class="card-arrow">↗</span></article>
+        <article class="season-stat"><span class="card-no">02</span><strong>Р2<br><i>Р3</i></strong><p>Два мужских состава<br>в сезоне 2026/27</p></article>
+        <article class="season-stat season-stat-acid"><span class="card-no">03</span><strong>ЧТ<br><i>21:30</i></strong><p>Регулярная тренировка<br>каждую неделю</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="numbers-new page-pad">
+    <div class="section-index">03 <span>/</span> СЛЕД</div>
+    <div class="numbers-head"><h2>Каждый сезон<br>остаётся <em>с нами.</em></h2><p>Собираем историю клуба по кусочкам: матчи, лица, поездки, победы и просто моменты, ради которых всё это существует.</p></div>
+    <div class="numbers-grid"><div><strong>2009</strong><span>год основания</span></div><div><strong>49</strong><span>наград клуба</span></div><div><strong>∞</strong><span>историй команды</span></div></div>
+  </section>
+
+
+  <section class="contact-new"><div class="page-pad contact-wrap"><div><div class="section-index light-index">04 <span>/</span> НА СВЯЗИ</div><h2>Будь<br><em>в команде.</em></h2></div><div class="contact-links"><a href="https://vk.com/fbc_sharks" target="_blank" rel="noreferrer"><span>VK</span><b>ВКонтакте</b><i>↗</i></a><a href="https://t.me/ifbc_sharks" target="_blank" rel="noreferrer"><span>TG</span><b>Telegram</b><i>↗</i></a><p>ИФБК «Акулы»<br>Санкт-Петербург · Россия</p></div></div></section>
+</main>
+
+{{ partial "footer.html" . }}
+{{ end }}
+
+{{ define "scripts" }}{{ end }}

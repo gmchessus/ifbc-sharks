@@ -1,0 +1,211 @@
+# ИФБК «Акулы» — сайт клуба
+
+Статический русскоязычный сайт флорбольного клуба ИФБК «Акулы».
+
+- Публичный адрес: <https://gmchessus.duckdns.org>
+- Локальный проект: `/root/freebuff/sharks`
+- Источник архивных материалов: `ifbc-sharks.ru`
+- Индексация поисковиками запрещена.
+
+> Файл называется `README.cd` по запросу проекта. Основная документация также может находиться в `README.md`.
+
+## Структура проекта
+
+```text
+.
+├── index.html                    # Главная страница
+├── archive.html                  # Фотоархив и ссылки на видео
+├── assets/
+│   ├── styles.css                # Стили главной страницы
+│   └── archive.css               # Стили страницы архива
+├── archive/
+│   ├── media-index.js            # Индекс 1041 архивной фотографии
+│   ├── archive.js                # Поиск, пагинация и lightbox архива
+│   ├── media/legacy/             # Скачанные фотографии старого сайта
+│   ├── photo-download-report.csv # URL, размеры и SHA-256 фотографий
+│   ├── media-manifest.csv        # Общий реестр фото и видео
+│   ├── video-links.txt           # Ссылки на внешний видеоархив
+│   └── video-download-report.csv # Результат попытки загрузки видео
+├── robots.txt                    # Disallow: /
+├── _headers                      # X-Robots-Tag для совместимых хостингов
+├── scripts/
+│   └── inventory.py              # Read-only инвентаризация старого сайта
+├── docs/
+│   ├── technical-specification.md
+│   └── archive-migration.md
+└── server/
+    └── nginx-noindex.conf        # Справочный пример конфигурации Nginx
+```
+
+## Локальный запуск
+
+Из корня проекта:
+
+```bash
+cd /root/freebuff/sharks
+python3 -m http.server 8080
+```
+
+Открыть:
+
+```text
+http://127.0.0.1:8080/
+http://127.0.0.1:8080/archive.html
+```
+
+Локальный сервер нужен только для проверки. Продакшен раздаётся Caddy.
+
+## Архив фотографий
+
+В архив загружено **1041 фото** со старого сайта. Файлы сохранены с относительной структурой исходных URL в каталоге:
+
+```text
+archive/media/legacy/
+```
+
+Проверка архива:
+
+```bash
+cd /root/freebuff/sharks
+python3 - <<'PY'
+import csv
+from pathlib import Path
+
+rows = list(csv.DictReader(Path("archive/photo-download-report.csv").open()))
+missing = [row["local_path"] for row in rows if not Path(row["local_path"]).exists()]
+print(f"Файлов в отчёте: {len(rows)}")
+print(f"Отсутствует: {len(missing)}")
+PY
+```
+
+Для каждого скачанного файла в `photo-download-report.csv` сохранены:
+
+- URL источника;
+- локальный путь;
+- размер;
+- SHA-256;
+- статус загрузки.
+
+## Видео
+
+Старый сайт содержит ссылки на внешний YouTube-канал клуба, но прямых видеофайлов на самом сайте не обнаружено.
+
+Ссылки находятся в:
+
+```text
+archive/video-links.txt
+```
+
+Попытка скачать доступный ролик была остановлена проверкой YouTube `Sign in to confirm you’re not a bot`. Обход авторизации и использование чужих cookies не выполнялись. Результат зафиксирован в `archive/video-download-report.csv`.
+
+## Инвентаризация старого сайта
+
+Скрипт работает в read-only режиме и не изменяет источник:
+
+```bash
+cd /root/freebuff/sharks
+python3 scripts/inventory.py --output /tmp/archive-inventory.csv
+```
+
+Если у старого источника возникает ошибка сертификата:
+
+```bash
+python3 scripts/inventory.py \
+  --insecure \
+  --output /tmp/archive-inventory.csv
+```
+
+Не направляйте результат сразу в рабочий `archive-inventory.csv`, если не хотите заменить текущий реестр.
+
+## Развёртывание через Caddy
+
+Активный конфиг Caddy находится вне проекта:
+
+```text
+/etc/caddy/sites/gmchessus.duckdns.org.caddy
+```
+
+Он раздаёт:
+
+```text
+/root/freebuff/sharks
+```
+
+После изменения HTML, CSS или JS достаточно проверить конфигурацию и выполнить reload:
+
+```bash
+caddy validate \
+  --config /etc/caddy/Caddyfile \
+  --adapter caddyfile
+
+systemctl reload caddy
+```
+
+Не используйте `systemctl restart caddy` без необходимости: reload безопаснее для остальных сайтов на хосте.
+
+Проверка публикации:
+
+```bash
+curl -skSI https://gmchessus.duckdns.org/
+curl -skSI https://gmchessus.duckdns.org/archive.html
+systemctl is-active caddy
+```
+
+## Страница 404
+
+Для неизвестных адресов сайт отдаёт страницу `404.html` (шаблон `layouts/404.html`, собирается в `public/404.html`).
+
+Чтобы Caddy показывал её вместо стандартной страницы ошибки, в активном конфиге
+`/etc/caddy/sites/gmchessus.duckdns.org.caddy` внутри site-блока нужно добавить:
+
+```caddyfile
+handle_errors {
+    rewrite * /404.html
+    file_server
+}
+```
+
+Затем проверить и перезагрузить:
+
+```bash
+caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+systemctl reload caddy
+```
+
+Проверка: неизвестный адрес должен вернуть `404` с содержимым страницы:
+
+```bash
+curl -skS -o /dev/null -w '%{http_code}\n' https://gmchessus.duckdns.org/nonexistent-page
+```
+
+## Важные ограничения
+
+1. Не удалять `robots.txt`, meta-теги `noindex` и заголовок `X-Robots-Tag`.
+2. Не менять host-блоки других сайтов в `/etc/caddy/sites/`.
+3. Перед reload всегда выполнять `caddy validate`.
+4. Не заменять архивные материалы вымышленными фотографиями, датами или результатами матчей.
+5. Не скачивать приватные материалы и не обходить ограничения внешних сервисов.
+6. Перед массовой загрузкой проверять свободное место на диске.
+7. Проверять, что `plisio.duckdns.org` и `maltaart.duckdns.org` продолжают отвечать после изменений.
+
+## Быстрая проверка после изменений
+
+```bash
+cd /root/freebuff/sharks
+
+# JavaScript-синтаксис, если Node.js установлен
+node --check archive/archive.js
+
+# Конфигурация Caddy
+caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+
+# Сайт
+curl -skS -o /dev/null -w '%{http_code}\n' https://gmchessus.duckdns.org/
+curl -skS -o /dev/null -w '%{http_code}\n' https://gmchessus.duckdns.org/archive.html
+
+# Другие сайты на хосте
+curl -skS -o /dev/null -w '%{http_code}\n' https://plisio.duckdns.org/
+curl -skS -o /dev/null -w '%{http_code}\n' https://maltaart.duckdns.org/
+```
+
+Ожидаемый статус для всех четырёх URL: `200`.
