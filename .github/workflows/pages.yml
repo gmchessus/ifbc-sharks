@@ -17,13 +17,16 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HUGO_BASEURL: https://gmchessus.github.io/ifbc-sharks/
+      HUGO_RELATIVEURLS: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.140.2"
       - name: Build
-        run: hugo --minify --relativeURLs --baseURL "https://gmchessus.github.io/ifbc-sharks/" -d dist
+        run: hugo --minify -d dist
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
